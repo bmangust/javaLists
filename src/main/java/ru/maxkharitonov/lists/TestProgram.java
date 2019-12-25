@@ -1,4 +1,5 @@
-import java.util.Arrays;
+package ru.maxkharitonov.lists;
+
 import java.util.LinkedList;
 
 public class TestProgram {
@@ -23,21 +24,12 @@ public class TestProgram {
         try {
             l.add(3,5);
             System.out.println("Deleted: " + l.removeAt(4).toString());
+            System.out.println("Deleted: " + l.removeLast().toString());
         } catch (MyListIndexException e) {
             e.printStackTrace();
         }
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 3; ++i) {
             System.out.println(l.get(i));
         }
-
-//        MyLinkedList p = new MyLinkedList();
-//        try {
-//            System.out.println(p.getFirst());
-//        } catch (MyListIsEmptyException e) {
-//            System.out.println(e.toString());
-//        }
-
-//        System.out.println(l.getLast());
-
     }
 }
