@@ -1,6 +1,6 @@
 package ru.maxkharitonov.lists;
 
-public class MyListIsEmptyException extends Exception {
+public class MyListIsEmptyException extends RuntimeException {
     String body = "MyListException occurred";
     String s;
 

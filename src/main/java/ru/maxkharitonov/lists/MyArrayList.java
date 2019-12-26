@@ -4,8 +4,6 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
 public class MyArrayList<T> implements Iterable {
     private Object[] head;
@@ -36,6 +34,7 @@ public class MyArrayList<T> implements Iterable {
         for(int i = size - 1; i >= 0; i--) {
             head[i + 1] = head[i];
         }
+        if (size - 1 + 1 >= 0) System.arraycopy(head, 0, head, 1, size - 1 + 1);
     }
 
     private void selfCopy(int start) {
@@ -106,6 +105,7 @@ public class MyArrayList<T> implements Iterable {
         size++;
     }
 
+    @SuppressWarnings("unchecked")
     public T get(int index) throws MyListIsEmptyException, MyListIndexException {
         if (size == 0)
             throw new MyListIsEmptyException();
@@ -114,18 +114,21 @@ public class MyArrayList<T> implements Iterable {
         return (T) head[index];
     }
 
+    @SuppressWarnings("unchecked")
     public T getFirst() throws MyListIsEmptyException {
         if (size == 0)
             throw new MyListIsEmptyException();
         return (T) head[0];
     }
 
+    @SuppressWarnings("unchecked")
     public T getLast() throws MyListIsEmptyException {
         if (size == 0)
             throw new MyListIsEmptyException();
         return (T) head[size - 1];
     }
 
+    @SuppressWarnings("unchecked")
     public T removeLast() throws MyListIsEmptyException {
         T elem;
 
@@ -137,6 +140,7 @@ public class MyArrayList<T> implements Iterable {
         return elem;
     }
 
+    @SuppressWarnings("unchecked")
     public T removeFirst() throws MyListIsEmptyException {
         T elem;
 
@@ -149,6 +153,7 @@ public class MyArrayList<T> implements Iterable {
         return (elem);
     }
 
+    @SuppressWarnings("unchecked")
     public T removeAt(int index) throws MyListIsEmptyException, MyListIndexException {
         T elem;
 
@@ -191,6 +196,7 @@ public class MyArrayList<T> implements Iterable {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void addCollection(Collection<?> c) throws NullPointerException {
         if (c == null)
             throw new NullPointerException();
@@ -236,15 +242,6 @@ public class MyArrayList<T> implements Iterable {
         return (false);
     }
 
-    @Override
-    public void forEach(Consumer action) {
-
-    }
-
-    @Override
-    public Spliterator spliterator() {
-        return null;
-    }
     @Override
     public Iterator<T> iterator() {
         return new MyArrayList.MyAListIter();

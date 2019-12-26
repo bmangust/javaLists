@@ -35,6 +35,13 @@ public class MyArrayListTest {
         ls = null;
     }
 
+    // not sure how to test this
+//    @Test
+//    public void MyArrayList() {
+//        MyArrayList<String> nl = new MyArrayList<Class<String>, 5>;
+//
+//    }
+
     @Test
     public void getSize() {
         String m = "row ";
@@ -44,7 +51,6 @@ public class MyArrayListTest {
         }
         assertEquals(5, l.getSize());
         assertEquals(5, ls.getSize());
-
     }
 
     @Test
@@ -89,12 +95,8 @@ public class MyArrayListTest {
         } catch (MyListIndexException e) {
             fail();
         }
-        try {
-            assertEquals(a.get(3), l.get(3));
-            assertEquals(s.get(3), ls.get(3));
-        } catch (MyListIsEmptyException | MyListIndexException e) {
-            fail();
-        }
+        assertEquals(a.get(3), l.get(3));
+        assertEquals(s.get(3), ls.get(3));
     }
 
     @Test
@@ -107,12 +109,8 @@ public class MyArrayListTest {
             l.addLast(i);
         }
         for (int i = 0; i < TEST_SIZE; i++) {
-            try {
-                assertEquals(a.get(i), l.get(i));
-                assertEquals(s.get(i), ls.get(i));
-            } catch (MyListIsEmptyException | MyListIndexException e) {
-                fail();
-            }
+            assertEquals(a.get(i), l.get(i));
+            assertEquals(s.get(i), ls.get(i));
         }
     }
 
@@ -126,12 +124,8 @@ public class MyArrayListTest {
             ls.addFirst(m + i);
         }
         for (int i = 0; i < TEST_SIZE; i++) {
-            try {
-                assertEquals(a.get(i), l.get(i));
-                assertEquals(s.get(i), ls.get(i));
-            } catch (MyListIsEmptyException | MyListIndexException e) {
-                fail();
-            }
+            assertEquals(a.get(i), l.get(i));
+            assertEquals(s.get(i), ls.get(i));
         }
     }
 
@@ -159,12 +153,8 @@ public class MyArrayListTest {
             l.add(i);
         }
         for (int i = 0; i < TEST_SIZE; i++) {
-            try {
-                assertEquals(a.get(i), l.get(i));
-                assertEquals(s.get(i), ls.get(i));
-            } catch (MyListIsEmptyException | MyListIndexException e) {
-                fail();
-            }
+            assertEquals(a.get(i), l.get(i));
+            assertEquals(s.get(i), ls.get(i));
         }
         try {
             l.get(7);
@@ -201,12 +191,8 @@ public class MyArrayListTest {
             a.add(i);
             l.add(i);
         }
-        try {
-            assertEquals(a.get(0), l.getFirst());
-            assertEquals(s.get(0), ls.getFirst());
-        } catch (MyListIsEmptyException e) {
-            fail();
-        }
+        assertEquals(a.get(0), l.getFirst());
+        assertEquals(s.get(0), ls.getFirst());
     }
 
     @Test
@@ -228,12 +214,8 @@ public class MyArrayListTest {
             a.add(i);
             l.add(i);
         }
-        try {
-            assertEquals(a.get(a.size() - 1), l.getLast());
-            assertEquals(s.get(a.size() - 1), ls.getLast());
-        } catch (MyListIsEmptyException e) {
-            fail();
-        }
+        assertEquals(a.get(a.size() - 1), l.getLast());
+        assertEquals(s.get(a.size() - 1), ls.getLast());
     }
 
     @Test
@@ -256,12 +238,8 @@ public class MyArrayListTest {
             ls.add(m + i);
         }
         for (int i = 0; i < TEST_SIZE; i++) {
-            try {
-                assertEquals(a.remove(a.size() - 1), l.removeLast());
-                assertEquals(s.remove(s.size() - 1), ls.removeLast());
-            } catch (MyListIsEmptyException e) {
-                fail();
-            }
+            assertEquals(a.remove(a.size() - 1), l.removeLast());
+            assertEquals(s.remove(s.size() - 1), ls.removeLast());
         }
     }
 
@@ -284,25 +262,17 @@ public class MyArrayListTest {
             s.add(m + i);
             ls.add(m + i);
         }
-        try {
-            assertEquals(a.remove(0), l.removeFirst());
-            assertEquals(s.remove(0), ls.removeFirst());
-            assertEquals(TEST_SIZE - 1, l.getSize());
-            assertEquals(TEST_SIZE - 1, ls.getSize());
-            assertEquals(a.get(a.size() - 1), l.getLast());
-            assertEquals(s.get(s.size() - 1), ls.getLast());
-        } catch (MyListIsEmptyException e) {
-            fail();
-        }
+        assertEquals(a.remove(0), l.removeFirst());
+        assertEquals(s.remove(0), ls.removeFirst());
+        assertEquals(TEST_SIZE - 1, l.getSize());
+        assertEquals(TEST_SIZE - 1, ls.getSize());
+        assertEquals(a.get(a.size() - 1), l.getLast());
+        assertEquals(s.get(s.size() - 1), ls.getLast());
         for (int i = 0; i < TEST_SIZE - 1; i++) {
-            try {
-                assertEquals(a.remove(0), l.removeFirst());
-                assertEquals(TEST_SIZE - 2 - i, l.getSize());
-                assertEquals(s.remove(0), ls.removeFirst());
-                assertEquals(TEST_SIZE - 2 - i, ls.getSize());
-            } catch (MyListIsEmptyException e) {
-                fail();
-            }
+            assertEquals(a.remove(0), l.removeFirst());
+            assertEquals(TEST_SIZE - 2 - i, l.getSize());
+            assertEquals(s.remove(0), ls.removeFirst());
+            assertEquals(TEST_SIZE - 2 - i, ls.getSize());
         }
     }
 
@@ -343,16 +313,12 @@ public class MyArrayListTest {
         } catch (MyListIndexException e) {
             assertEquals("MyListException occurred: index is out of range", e.toString());
         }
-        try {
-            assertEquals(a.remove(4), l.removeAt(4));
-            assertEquals(a.remove(2), l.removeAt(2));
-            assertEquals(a.remove(0), l.removeAt(0));
-            assertEquals(s.remove(4), ls.removeAt(4));
-            assertEquals(s.remove(2), ls.removeAt(2));
-            assertEquals(s.remove(0), ls.removeAt(0));
-        } catch (MyListIsEmptyException | MyListIndexException e) {
-            fail();
-        }
+        assertEquals(a.remove(4), l.removeAt(4));
+        assertEquals(a.remove(2), l.removeAt(2));
+        assertEquals(a.remove(0), l.removeAt(0));
+        assertEquals(s.remove(4), ls.removeAt(4));
+        assertEquals(s.remove(2), ls.removeAt(2));
+        assertEquals(s.remove(0), ls.removeAt(0));
     }
 
     @Test
@@ -378,46 +344,42 @@ public class MyArrayListTest {
             s.add(m + i);
             ls.add(m + i);
         }
+        assertEquals(4, (int) l.remove(4));
+        assertEquals(0, (int) l.remove(0));
+        assertEquals("row 1", ls.remove("row 1"));
+        assertEquals("row 3", ls.remove("row 3"));
         try {
-            assertEquals(4, (int) l.remove(4));
             assertEquals(0, (int) l.remove(0));
-            assertEquals("row 1", ls.remove("row 1"));
-            assertEquals("row 3", ls.remove("row 3"));
-            try {
-                assertEquals(0, (int) l.remove(0));
-            } catch (MyListElementNotFoundException e) {
-                assertEquals("MyListException occurred: element not found", e.toString());
-            }
-            try {
-                assertNotEquals(-4, (int) l.remove(-4));
-            } catch (MyListElementNotFoundException | MyListIsEmptyException e) {
-                assertEquals("MyListException occurred: element not found", e.toString());
-            }
-            try {
-                assertNull(l.remove(null));
-            } catch (NullPointerException e) {
-                assertNotEquals("", e.getMessage());
-            } catch (MyListIsEmptyException | MyListElementNotFoundException e) {
-                fail();
-            }
-            try {
-                assertNull(ls.remove("row 1"));
-            } catch (MyListElementNotFoundException e) {
-                assertEquals("MyListException occurred: element not found", e.toString());
-            }
-            try {
-                assertNull(ls.remove("row 5"));
-            } catch (MyListElementNotFoundException e) {
-                assertEquals("MyListException occurred: element not found", e.toString());
-            }
-            try {
-                assertNull(ls.remove(null));
-            } catch (NullPointerException e) {
-                assertNotEquals("", e.getMessage());
-            } catch (MyListIsEmptyException | MyListElementNotFoundException e) {
-                fail();
-            }
-        } catch (MyListIsEmptyException | MyListElementNotFoundException | NullPointerException e) {
+        } catch (MyListElementNotFoundException e) {
+            assertEquals("MyListException occurred: element not found", e.toString());
+        }
+        try {
+            assertNotEquals(-4, (int) l.remove(-4));
+        } catch (MyListElementNotFoundException | MyListIsEmptyException e) {
+            assertEquals("MyListException occurred: element not found", e.toString());
+        }
+        try {
+            assertNull(l.remove(null));
+        } catch (NullPointerException e) {
+            assertNotEquals("", e.getMessage());
+        } catch (MyListIsEmptyException | MyListElementNotFoundException e) {
+            fail();
+        }
+        try {
+            assertNull(ls.remove("row 1"));
+        } catch (MyListElementNotFoundException e) {
+            assertEquals("MyListException occurred: element not found", e.toString());
+        }
+        try {
+            assertNull(ls.remove("row 5"));
+        } catch (MyListElementNotFoundException e) {
+            assertEquals("MyListException occurred: element not found", e.toString());
+        }
+        try {
+            assertNull(ls.remove(null));
+        } catch (NullPointerException e) {
+            assertNotEquals("", e.getMessage());
+        } catch (MyListIsEmptyException | MyListElementNotFoundException e) {
             fail();
         }
     }
@@ -518,16 +480,12 @@ public class MyArrayListTest {
         } catch (MyListIsEmptyException | MyListElementNotFoundException e) {
             fail();
         }
-        try {
-            assertEquals(9, (int) l.get(0));
-            assertEquals(7, (int) l.get(1));
-            assertEquals("row 9", ls.get(0));
-            assertEquals("row 7", ls.get(1));
-            assertNotEquals(8, (int) l.get(1));
-            assertNotEquals("row 8", ls.get(1));
-        } catch (MyListIsEmptyException | MyListIndexException e) {
-            fail();
-        }
+        assertEquals(9, (int) l.get(0));
+        assertEquals(7, (int) l.get(1));
+        assertEquals("row 9", ls.get(0));
+        assertEquals("row 7", ls.get(1));
+        assertNotEquals(8, (int) l.get(1));
+        assertNotEquals("row 8", ls.get(1));
         try {
             l.removeCollection(null);
         } catch (NullPointerException e) {
@@ -573,19 +531,42 @@ public class MyArrayListTest {
         }
         MyArrayList<Integer>.MyAListIter liter = l.new MyAListIter();
         MyArrayList<String>.MyAListIter lsiter = ls.new MyAListIter();
-        for (Integer elem:a) assertEquals(elem, liter.next());
-        for (String elem:s) assertEquals(elem, lsiter.next());
+        for (Integer elem : a) assertEquals(elem, liter.next());
+        for (String elem : s) assertEquals(elem, lsiter.next());
         int i = 0;
-        for (Object item:l) {
+        for (Object item : l) {
             assertEquals(i, item);
             i++;
         }
         i = 0;
-        for (Object item:ls) {
+        for (Object item : ls) {
             assertEquals(m + i, item);
             i++;
         }
+    }
 
-        //add remove test for iterator
+    @Test
+    public void iter_remove() {
+        String m = "row ";
+        for (int i = 0; i < TEST_SIZE; i++) {
+            a.add(i);
+            l.add(i);
+            s.add(m + i);
+            ls.add(m + i);
+        }
+        MyArrayList<Integer>.MyAListIter liter = l.new MyAListIter();
+        MyArrayList<String>.MyAListIter lsiter = ls.new MyAListIter();
+        for (int i = 0; i < TEST_SIZE - 1; i++) {
+            liter.remove();
+            a.remove(0);
+            assertEquals(a.get(0), l.getFirst());
+            lsiter.remove();
+            s.remove(0);
+            assertEquals(s.get(0), ls.getFirst());
+        }
+        liter.remove();
+        assertEquals(0, l.getSize());
+        lsiter.remove();
+        assertEquals(0, ls.getSize());
     }
 }

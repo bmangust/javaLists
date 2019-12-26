@@ -1,6 +1,6 @@
 package ru.maxkharitonov.lists;
 
-public class MyListElementNotFoundException extends Exception {
+public class MyListElementNotFoundException extends RuntimeException {
     String body = "MyListException occurred";
     String s;
 

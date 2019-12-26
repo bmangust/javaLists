@@ -1,6 +1,6 @@
 package ru.maxkharitonov.lists;
 
-public class MyListIndexException extends Exception {
+public class MyListIndexException extends RuntimeException {
     String body = "MyListException occurred";
     String s;
 

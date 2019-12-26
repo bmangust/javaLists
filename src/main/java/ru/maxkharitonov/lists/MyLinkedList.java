@@ -2,8 +2,6 @@ package ru.maxkharitonov.lists;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
 public class MyLinkedList<T> implements Iterable{
     private MyNode<T> head;
@@ -12,10 +10,6 @@ public class MyLinkedList<T> implements Iterable{
     public MyLinkedList () {
         head = null;
         size = 0;
-    }
-
-    public MyLinkedList (T o) {
-        addLast(o);
     }
 
     private boolean IsIndexInRange(int index) {
@@ -256,16 +250,6 @@ public class MyLinkedList<T> implements Iterable{
         }
         return (false);
     }
-
-//    @Override
-//    public void forEach(Consumer action) {
-//
-//    }
-//
-//    @Override
-//    public Spliterator spliterator() {
-//        return null;
-//    }
 
     @Override
     public Iterator<T> iterator() {
