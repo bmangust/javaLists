@@ -55,7 +55,7 @@ public class MyLinkedList<T> implements Iterable{
         MyNode<T> node = new MyNode<T>();
         node.setValue(o);
 
-        if (!IsIndexInRange(index))
+        if (index > size)
             throw new MyListIndexException();
         if (o == null)
             throw new NullPointerException();
@@ -118,6 +118,7 @@ public class MyLinkedList<T> implements Iterable{
         if (size == 1) {
             elem = head.getValue();
             head = null;
+            size--;
             return elem;
         }
         while (cur.getNextNode() != null) {
@@ -126,6 +127,7 @@ public class MyLinkedList<T> implements Iterable{
         }
         elem = cur.getValue();
         prev.updateLink(null);
+        size--;
         return (elem);
     }
 
@@ -137,6 +139,7 @@ public class MyLinkedList<T> implements Iterable{
             throw new MyListIsEmptyException();
         elem = cur.getValue();
         head = cur.getNextNode();
+        size--;
         return (elem);
     }
 
@@ -146,13 +149,14 @@ public class MyLinkedList<T> implements Iterable{
         MyNode<T> cur = head;
         MyNode<T> prev = head;
 
-        if (!IsIndexInRange(index))
-            throw new MyListIndexException();
         if (head == null)
             throw new MyListIsEmptyException();
+        if (!IsIndexInRange(index))
+            throw new MyListIndexException();
         if (index == 0) {
             elem = cur.getValue();
             head = cur.getNextNode();
+            size--;
             return (elem);
         }
         while (i != index) {
@@ -162,12 +166,39 @@ public class MyLinkedList<T> implements Iterable{
         }
         elem = cur.getValue();
         prev.updateLink(cur.getNextNode());
+        size--;
         return (elem);
     }
 
-    public void clear() throws MyListIsEmptyException {
+    public T remove(Object o) throws MyListIsEmptyException, MyListElementNotFoundException {
+        T elem;
+        int i = 0;
+        MyNode<T> cur = head;
+        MyNode<T> prev;
+
         if (head == null)
             throw new MyListIsEmptyException();
+        if (head.getValue().equals(o)) {
+            elem = head.getValue();
+            head.updateLink(head.getNextNode());
+            size--;
+            return (elem);
+        }
+        while (i < size) {
+            prev = cur;
+            cur = cur.getNextNode();
+            i++;
+            if (cur != null && cur.getValue().equals(o)) {
+                elem = cur.getValue();
+                prev.updateLink(cur.getNextNode());
+                size--;
+                return (elem);
+            }
+        }
+        throw new MyListElementNotFoundException();
+    }
+
+    public void clear() throws MyListIsEmptyException {
         while (head != null) {
             removeFirst();
         }
@@ -177,24 +208,62 @@ public class MyLinkedList<T> implements Iterable{
         return (size);
     }
 
-    public void addCollection(Collection c) {
+    public void addCollection(Collection<?> c) throws NullPointerException {
+        if (c == null)
+            throw new NullPointerException();
+        Object[] a = c.toArray();
+        int alen = a.length;
+        if (alen != 0) {
+            int i = 0;
+            while (i < alen) {
+                // need to add class check here?
+                // in case of having <Integer> list and other type collection
+                add((T) a[i]);
+                i++;
+            }
+        }
+    }
 
+    public void removeCollection(Collection<?> c)
+    throws MyListIsEmptyException, MyListElementNotFoundException, NullPointerException {
+        if (c == null)
+            throw new NullPointerException();
+        Object[] a = c.toArray();
+        int alen = a.length;
+        if (alen != 0) {
+            int i = 0;
+            while (i < alen) {
+                // need to add class check here?
+                // in case of having <Integer> list and other type collection
+                if (this.contains(a[i]))
+                    remove(a[i]);
+                i++;
+            }
+        }
+    }
+
+    public boolean contains(Object o) {
+        if (o == null)
+            throw new NullPointerException();
+        MyLinkedList<Object>.MyLListIter iter = new MyLinkedList<Object>.MyLListIter();
+        for (int i = 0; i < this.size; i++) {
+            if (iter.next() == o)
+                return (true);
+        }
+        return (false);
     }
 
 
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         return new MyLListIter();
     }
 
     class MyLListIter implements Iterator<T> {
-        private MyNode<T> listHead;
         private MyNode<T> current;
-        private MyNode<T> next;
         private int currentIndex;
 
         public MyLListIter() {
-            listHead = head;
             current = head;
             currentIndex = 0;
         }
@@ -204,9 +273,10 @@ public class MyLinkedList<T> implements Iterable{
             return currentIndex < size && current.getNextNode() != null;
         }
 
-        // how to return MyNode properly?
         @Override
         public T next() {
+            if (current == null)
+                return (null);
             MyNode<T> result = current;
             current = current.getNextNode();
             currentIndex++;
