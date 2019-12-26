@@ -9,22 +9,22 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class MyLinkedListTest {
+public class MyArrayListTest {
 
     public static final int TEST_SIZE = 5;
     private ArrayList<Integer> a;
-    private MyLinkedList<Integer> l;
+    private MyArrayList<Integer> l;
     private ArrayList <String> s;
-    private MyLinkedList <String> ls;
+    private MyArrayList <String> ls;
 
     @Before
     public void init() {
         a = new ArrayList<Integer>();
-        l = new MyLinkedList<Integer>();
-
+        l = new MyArrayList<Integer>();
         s = new ArrayList<String>();
-        ls = new MyLinkedList<String>();
+        ls = new MyArrayList<String>();
     }
 
     @After
@@ -36,6 +36,18 @@ public class MyLinkedListTest {
     }
 
     @Test
+    public void getSize() {
+        String m = "row ";
+        for (int i = 0; i < 5; i++) {
+            l.add(i);
+            ls.add(m + i);
+        }
+        assertEquals(5, l.getSize());
+        assertEquals(5, ls.getSize());
+
+    }
+
+    @Test
     public void add() {
         String m = "row ";
         for (int i = 0; i < TEST_SIZE; i++) {
@@ -44,8 +56,8 @@ public class MyLinkedListTest {
             s.add(m + i);
             ls.add(m + i);
         }
-        MyLinkedList<Integer>.MyLListIter liter = l.new MyLListIter();
-        MyLinkedList<String>.MyLListIter lsiter = ls.new MyLListIter();
+        MyArrayList<Integer>.MyAListIter liter = l.new MyAListIter();
+        MyArrayList<String>.MyAListIter lsiter = ls.new MyAListIter();
         for (Integer elem:a) assertEquals(elem, liter.next());
         for (String elem:s) assertEquals(elem, lsiter.next());
     }
@@ -108,10 +120,10 @@ public class MyLinkedListTest {
     public void addFirst() {
         String m = "row ";
         for (int i = 0; i < TEST_SIZE; i++) {
-            s.add(0, m + i);
-            ls.addFirst(m + i);
             a.add(0, i);
             l.addFirst(i);
+            s.add(0, m + i);
+            ls.addFirst(m + i);
         }
         for (int i = 0; i < TEST_SIZE; i++) {
             try {
@@ -183,7 +195,7 @@ public class MyLinkedListTest {
             assertEquals("MyListException occurred: list is empty", e.toString());
         }
         String m = "row ";
-        for (int i = 0; i < TEST_SIZE; i++) {
+        for (int i = 0; i < 2; i++) {
             s.add(m + i);
             ls.add(m + i);
             a.add(i);
@@ -210,7 +222,7 @@ public class MyLinkedListTest {
             assertEquals("MyListException occurred: list is empty", e.toString());
         }
         String m = "row ";
-        for (int i = 0; i < TEST_SIZE; i++) {
+        for (int i = 0; i < 2; i++) {
             s.add(m + i);
             ls.add(m + i);
             a.add(i);
@@ -296,7 +308,6 @@ public class MyLinkedListTest {
 
     @Test
     public void removeAt() {
-        String m = "row ";
         try {
             l.removeAt(0);
         } catch (MyListIsEmptyException e) {
@@ -305,27 +316,28 @@ public class MyLinkedListTest {
             fail();
         }
         try {
-            ls.removeAt(TEST_SIZE);
+            ls.removeAt(5);
         } catch (MyListIsEmptyException e) {
             assertEquals("MyListException occurred: list is empty", e.toString());
         } catch (MyListIndexException e) {
             fail();
         }
-        for (int i = 0; i < TEST_SIZE; i++) {
+        String m = "row ";
+        for (int i = 0; i < 5; i++) {
             a.add(i);
             l.add(i);
             s.add(m + i);
             ls.add(m + i);
         }
         try {
-            l.removeAt(TEST_SIZE);
+            l.removeAt(5);
         } catch (MyListIsEmptyException e) {
             fail();
         } catch (MyListIndexException e) {
             assertEquals("MyListException occurred: index is out of range", e.toString());
         }
         try {
-            ls.removeAt(TEST_SIZE);
+            ls.removeAt(5);
         } catch (MyListIsEmptyException e) {
             fail();
         } catch (MyListIndexException e) {
@@ -334,8 +346,10 @@ public class MyLinkedListTest {
         try {
             assertEquals(a.remove(4), l.removeAt(4));
             assertEquals(a.remove(2), l.removeAt(2));
+            assertEquals(a.remove(0), l.removeAt(0));
             assertEquals(s.remove(4), ls.removeAt(4));
             assertEquals(s.remove(2), ls.removeAt(2));
+            assertEquals(s.remove(0), ls.removeAt(0));
         } catch (MyListIsEmptyException | MyListIndexException e) {
             fail();
         }
@@ -411,7 +425,7 @@ public class MyLinkedListTest {
     @Test
     public void clear() {
         String m = "row ";
-        for (int i = 0; i < TEST_SIZE; i++) {
+        for (int i = 0; i < 5; i++) {
             l.add(i);
             ls.add(m + i);
         }
@@ -436,26 +450,14 @@ public class MyLinkedListTest {
     }
 
     @Test
-    public void getSize() {
-        String m = "row ";
-        for (int i = 0; i < TEST_SIZE; i++) {
-            l.add(i);
-            ls.add(m + i);
-        }
-        assertEquals(TEST_SIZE, l.getSize());
-        assertEquals(TEST_SIZE, ls.getSize());
-
-    }
-
-    @Test
     public void addCollection() {
         int i = 0;
         List<Integer> list = Arrays.asList(9,8,7,6);
         List<String> slist = Arrays.asList("row 9","row 8","row 7","row 6");
         l.addCollection(list);
         ls.addCollection(slist);
-        MyLinkedList<Integer>.MyLListIter liter = l.new MyLListIter();
-        MyLinkedList<String>.MyLListIter lsiter = ls.new MyLListIter();
+        MyArrayList<Integer>.MyAListIter liter = l.new MyAListIter();
+        MyArrayList<String>.MyAListIter lsiter = ls.new MyAListIter();
         while (i < list.size()) {
             assertEquals(list.get(i), liter.next());
             assertEquals(slist.get(i), lsiter.next());
@@ -569,8 +571,8 @@ public class MyLinkedListTest {
             s.add(m + i);
             ls.add(m + i);
         }
-        MyLinkedList<Integer>.MyLListIter liter = l.new MyLListIter();
-        MyLinkedList<String>.MyLListIter lsiter = ls.new MyLListIter();
+        MyArrayList<Integer>.MyAListIter liter = l.new MyAListIter();
+        MyArrayList<String>.MyAListIter lsiter = ls.new MyAListIter();
         for (Integer elem:a) assertEquals(elem, liter.next());
         for (String elem:s) assertEquals(elem, lsiter.next());
         int i = 0;

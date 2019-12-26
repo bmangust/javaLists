@@ -2,6 +2,8 @@ package ru.maxkharitonov.lists;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 
 public class MyLinkedList<T> implements Iterable{
     private MyNode<T> head;
@@ -170,7 +172,7 @@ public class MyLinkedList<T> implements Iterable{
         return (elem);
     }
 
-    public T remove(Object o) throws MyListIsEmptyException, MyListElementNotFoundException {
+    public T remove(Object o) throws MyListIsEmptyException, MyListElementNotFoundException, NullPointerException {
         T elem;
         int i = 0;
         MyNode<T> cur = head;
@@ -178,6 +180,8 @@ public class MyLinkedList<T> implements Iterable{
 
         if (head == null)
             throw new MyListIsEmptyException();
+        if (o == null)
+            throw new NullPointerException();
         if (head.getValue().equals(o)) {
             elem = head.getValue();
             head.updateLink(head.getNextNode());
@@ -253,6 +257,15 @@ public class MyLinkedList<T> implements Iterable{
         return (false);
     }
 
+//    @Override
+//    public void forEach(Consumer action) {
+//
+//    }
+//
+//    @Override
+//    public Spliterator spliterator() {
+//        return null;
+//    }
 
     @Override
     public Iterator<T> iterator() {
@@ -289,7 +302,6 @@ public class MyLinkedList<T> implements Iterable{
             try {
                 removeAt(currentIndex);
             } catch (MyListIsEmptyException | MyListIndexException e) {
-//                e.printStackTrace();
                 throw new UnsupportedOperationException();
             }
         }
