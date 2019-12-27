@@ -63,18 +63,18 @@ public class MyLinkedListTest {
         s.add(3, m + 10);
         try {
             ls.add(9, m + 10);
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("MyListException occurred: index is out of range", e.toString());
         }
         try {
             l.add(TEST_SIZE, 10);
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("MyListException occurred: index is out of range", e.toString());
         }
         try {
             l.add(3, 10);
             ls.add(3, m + 10);
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             fail();
         }
         assertEquals(a.get(3), l.get(3));
@@ -117,14 +117,14 @@ public class MyLinkedListTest {
             l.get(2);
         } catch (MyListIsEmptyException e) {
             assertEquals("MyListException occurred: list is empty", e.toString());
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             fail();
         }
         try {
             ls.get(2);
         } catch (MyListIsEmptyException e) {
             assertEquals("MyListException occurred: list is empty", e.toString());
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             fail();
         }
         String m = "row ";
@@ -142,14 +142,14 @@ public class MyLinkedListTest {
             l.get(7);
         } catch (MyListIsEmptyException e) {
             fail();
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("MyListException occurred: index is out of range", e.toString());
         }
         try {
             ls.get(7);
         } catch (MyListIsEmptyException e) {
             fail();
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("MyListException occurred: index is out of range", e.toString());
         }
     }
@@ -265,14 +265,14 @@ public class MyLinkedListTest {
             l.removeAt(0);
         } catch (MyListIsEmptyException e) {
             assertEquals("MyListException occurred: list is empty", e.toString());
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             fail();
         }
         try {
             ls.removeAt(TEST_SIZE);
         } catch (MyListIsEmptyException e) {
             assertEquals("MyListException occurred: list is empty", e.toString());
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             fail();
         }
         for (int i = 0; i < TEST_SIZE; i++) {
@@ -285,14 +285,14 @@ public class MyLinkedListTest {
             l.removeAt(TEST_SIZE);
         } catch (MyListIsEmptyException e) {
             fail();
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("MyListException occurred: index is out of range", e.toString());
         }
         try {
             ls.removeAt(TEST_SIZE);
         } catch (MyListIsEmptyException e) {
             fail();
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("MyListException occurred: index is out of range", e.toString());
         }
             assertEquals(a.remove(4), l.removeAt(4));
