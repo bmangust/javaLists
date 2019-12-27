@@ -21,10 +21,10 @@ public class MyArrayListTest {
 
     @Before
     public void init() {
-        a = new ArrayList<Integer>();
-        l = new MyArrayList<Integer>();
-        s = new ArrayList<String>();
-        ls = new MyArrayList<String>();
+        a = new ArrayList<>();
+        l = new MyArrayList<>();
+        s = new ArrayList<>();
+        ls = new MyArrayList<>();
     }
 
     @After
@@ -35,12 +35,20 @@ public class MyArrayListTest {
         ls = null;
     }
 
-    // not sure how to test this
-//    @Test
-//    public void MyArrayList() {
-//        MyArrayList<String> nl = new MyArrayList<Class<String>, 5>;
-//
-//    }
+    @Test
+    public void MyArrayList() {
+        String m = "row ";
+        for (int i = 0; i < 5; i++) {
+            a.add(i);
+            s.add(m + i);
+        }
+        MyArrayList<Integer> numbersTest = new MyArrayList<>(a);
+        MyArrayList<String> stringsTest = new MyArrayList<>(s);
+        for (int i = 0; i < TEST_SIZE; i++) {
+            assertEquals(a.get(i).intValue(), numbersTest.get(i).intValue());
+            assertEquals(s.get(i), stringsTest.get(i));
+        }
+    }
 
     @Test
     public void getSize() {
@@ -81,52 +89,22 @@ public class MyArrayListTest {
         s.add(3, m + 10);
         try {
             ls.add(9, m + 10);
-        } catch (MyListIndexException e) {
-            assertEquals("MyListException occurred: index is out of range", e.toString());
+        } catch (IndexOutOfBoundsException e) {
+            assertNotEquals("", e.getMessage());
         }
         try {
-            l.add(TEST_SIZE, 10);
-        } catch (MyListIndexException e) {
-            assertEquals("MyListException occurred: index is out of range", e.toString());
+            l.add(9, 10);
+        } catch (IndexOutOfBoundsException e) {
+            assertNotEquals("", e.getMessage());
         }
         try {
             l.add(3, 10);
             ls.add(3, m + 10);
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             fail();
         }
-        assertEquals(a.get(3), l.get(3));
-        assertEquals(s.get(3), ls.get(3));
-    }
-
-    @Test
-    public void addLast() {
-        String m = "row ";
-        for (int i = 0; i < TEST_SIZE; i++) {
-            s.add(m + i);
-            ls.addLast(m + i);
-            a.add(i);
-            l.addLast(i);
-        }
-        for (int i = 0; i < TEST_SIZE; i++) {
-            assertEquals(a.get(i), l.get(i));
-            assertEquals(s.get(i), ls.get(i));
-        }
-    }
-
-    @Test
-    public void addFirst() {
-        String m = "row ";
-        for (int i = 0; i < TEST_SIZE; i++) {
-            a.add(0, i);
-            l.addFirst(i);
-            s.add(0, m + i);
-            ls.addFirst(m + i);
-        }
-        for (int i = 0; i < TEST_SIZE; i++) {
-            assertEquals(a.get(i), l.get(i));
-            assertEquals(s.get(i), ls.get(i));
-        }
+        assertEquals(10, (int) l.get(3));
+        assertEquals("row 10", ls.get(3));
     }
 
     @Test
@@ -135,14 +113,14 @@ public class MyArrayListTest {
             l.get(2);
         } catch (MyListIsEmptyException e) {
             assertEquals("MyListException occurred: list is empty", e.toString());
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             fail();
         }
         try {
             ls.get(2);
         } catch (MyListIsEmptyException e) {
             assertEquals("MyListException occurred: list is empty", e.toString());
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             fail();
         }
         String m = "row ";
@@ -160,119 +138,15 @@ public class MyArrayListTest {
             l.get(7);
         } catch (MyListIsEmptyException e) {
             fail();
-        } catch (MyListIndexException e) {
-            assertEquals("MyListException occurred: index is out of range", e.toString());
+        } catch (IndexOutOfBoundsException e) {
+            assertNotEquals("", e.getMessage());
         }
         try {
             ls.get(7);
         } catch (MyListIsEmptyException e) {
             fail();
-        } catch (MyListIndexException e) {
-            assertEquals("MyListException occurred: index is out of range", e.toString());
-        }
-    }
-
-    @Test
-    public void getFirst() {
-        try {
-            l.getFirst();
-        } catch (MyListIsEmptyException e) {
-            assertEquals("MyListException occurred: list is empty", e.toString());
-        }
-        try {
-            ls.getFirst();
-        } catch (MyListIsEmptyException e) {
-            assertEquals("MyListException occurred: list is empty", e.toString());
-        }
-        String m = "row ";
-        for (int i = 0; i < 2; i++) {
-            s.add(m + i);
-            ls.add(m + i);
-            a.add(i);
-            l.add(i);
-        }
-        assertEquals(a.get(0), l.getFirst());
-        assertEquals(s.get(0), ls.getFirst());
-    }
-
-    @Test
-    public void getLast() {
-        try {
-            l.getLast();
-        } catch (MyListIsEmptyException e) {
-            assertEquals("MyListException occurred: list is empty", e.toString());
-        }
-        try {
-            ls.getLast();
-        } catch (MyListIsEmptyException e) {
-            assertEquals("MyListException occurred: list is empty", e.toString());
-        }
-        String m = "row ";
-        for (int i = 0; i < 2; i++) {
-            s.add(m + i);
-            ls.add(m + i);
-            a.add(i);
-            l.add(i);
-        }
-        assertEquals(a.get(a.size() - 1), l.getLast());
-        assertEquals(s.get(a.size() - 1), ls.getLast());
-    }
-
-    @Test
-    public void removeLast() {
-        String m = "row ";
-        try {
-            l.removeLast();
-        } catch (MyListIsEmptyException e) {
-            assertEquals("MyListException occurred: list is empty", e.toString());
-        }
-        try {
-            ls.removeLast();
-        } catch (MyListIsEmptyException e) {
-            assertEquals("MyListException occurred: list is empty", e.toString());
-        }
-        for (int i = 0; i < TEST_SIZE; i++) {
-            a.add(i);
-            l.add(i);
-            s.add(m + i);
-            ls.add(m + i);
-        }
-        for (int i = 0; i < TEST_SIZE; i++) {
-            assertEquals(a.remove(a.size() - 1), l.removeLast());
-            assertEquals(s.remove(s.size() - 1), ls.removeLast());
-        }
-    }
-
-    @Test
-    public void removeFirst() {
-        String m = "row ";
-        try {
-            l.removeFirst();
-        } catch (MyListIsEmptyException e) {
-            assertEquals("MyListException occurred: list is empty", e.toString());
-        }
-        try {
-            ls.removeFirst();
-        } catch (MyListIsEmptyException e) {
-            assertEquals("MyListException occurred: list is empty", e.toString());
-        }
-        for (int i = 0; i < TEST_SIZE; i++) {
-            a.add(i);
-            l.add(i);
-            s.add(m + i);
-            ls.add(m + i);
-        }
-        assertEquals(a.remove(0), l.removeFirst());
-        assertEquals(s.remove(0), ls.removeFirst());
-        assertEquals(TEST_SIZE - 1, l.getSize());
-        assertEquals(TEST_SIZE - 1, ls.getSize());
-        assertEquals(a.get(a.size() - 1), l.getLast());
-        assertEquals(s.get(s.size() - 1), ls.getLast());
-        for (int i = 0; i < TEST_SIZE - 1; i++) {
-            assertEquals(a.remove(0), l.removeFirst());
-            assertEquals(TEST_SIZE - 2 - i, l.getSize());
-            assertEquals(s.remove(0), ls.removeFirst());
-            assertEquals(TEST_SIZE - 2 - i, ls.getSize());
+        } catch (IndexOutOfBoundsException e) {
+            assertNotEquals("", e.getMessage());
         }
     }
 
@@ -282,14 +156,14 @@ public class MyArrayListTest {
             l.removeAt(0);
         } catch (MyListIsEmptyException e) {
             assertEquals("MyListException occurred: list is empty", e.toString());
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             fail();
         }
         try {
             ls.removeAt(5);
         } catch (MyListIsEmptyException e) {
             assertEquals("MyListException occurred: list is empty", e.toString());
-        } catch (MyListIndexException e) {
+        } catch (IndexOutOfBoundsException e) {
             fail();
         }
         String m = "row ";
@@ -303,15 +177,16 @@ public class MyArrayListTest {
             l.removeAt(5);
         } catch (MyListIsEmptyException e) {
             fail();
-        } catch (MyListIndexException e) {
-            assertEquals("MyListException occurred: index is out of range", e.toString());
+        } catch (IndexOutOfBoundsException e) {
+            assertNotEquals("", e.getMessage());
+            
         }
         try {
             ls.removeAt(5);
         } catch (MyListIsEmptyException e) {
             fail();
-        } catch (MyListIndexException e) {
-            assertEquals("MyListException occurred: index is out of range", e.toString());
+        } catch (IndexOutOfBoundsException e) {
+            assertNotEquals("", e.getMessage());
         }
         assertEquals(a.remove(4), l.removeAt(4));
         assertEquals(a.remove(2), l.removeAt(2));
@@ -559,10 +434,10 @@ public class MyArrayListTest {
         for (int i = 0; i < TEST_SIZE - 1; i++) {
             liter.remove();
             a.remove(0);
-            assertEquals(a.get(0), l.getFirst());
+            assertEquals(a.get(0), l.get(0));
             lsiter.remove();
             s.remove(0);
-            assertEquals(s.get(0), ls.getFirst());
+            assertEquals(s.get(0), ls.get(0));
         }
         liter.remove();
         assertEquals(0, l.getSize());

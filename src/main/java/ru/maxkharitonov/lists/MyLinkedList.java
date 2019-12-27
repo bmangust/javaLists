@@ -3,7 +3,7 @@ package ru.maxkharitonov.lists;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class MyLinkedList<T> implements Iterable{
+public class MyLinkedList<T> implements Iterable<T>{
     private MyNode<T> head;
     private int size;
 
@@ -47,12 +47,12 @@ public class MyLinkedList<T> implements Iterable{
         size++;
     }
 
-    public void add(int index, T o) throws MyListIndexException, NullPointerException {
+    public void add(int index, T o) throws IndexOutOfBoundsException, NullPointerException {
         MyNode<T> node = new MyNode<T>();
         node.setValue(o);
 
         if (index > size)
-            throw new MyListIndexException();
+            throw new IndexOutOfBoundsException();
         if (o == null)
             throw new NullPointerException();
         if (head == null) {
@@ -73,14 +73,14 @@ public class MyLinkedList<T> implements Iterable{
         size++;
     }
 
-    public T get(int index) throws MyListIsEmptyException, MyListIndexException {
+    public T get(int index) throws MyListIsEmptyException, IndexOutOfBoundsException {
         MyNode<T> tmp = head;
         int i = 0;
 
         if (head == null)
             throw new MyListIsEmptyException();
         if (!IsIndexInRange(index))
-            throw new MyListIndexException();
+            throw new IndexOutOfBoundsException();
         while (i != index) {
             tmp = tmp.getNextNode();
             ++i;
@@ -139,7 +139,7 @@ public class MyLinkedList<T> implements Iterable{
         return (elem);
     }
 
-    public T removeAt(int index) throws MyListIsEmptyException, MyListIndexException {
+    public T removeAt(int index) throws MyListIsEmptyException, IndexOutOfBoundsException {
         T elem;
         int i = 0;
         MyNode<T> cur = head;
@@ -148,7 +148,7 @@ public class MyLinkedList<T> implements Iterable{
         if (head == null)
             throw new MyListIsEmptyException();
         if (!IsIndexInRange(index))
-            throw new MyListIndexException();
+            throw new IndexOutOfBoundsException();
         if (index == 0) {
             elem = cur.getValue();
             head = cur.getNextNode();
@@ -210,12 +210,9 @@ public class MyLinkedList<T> implements Iterable{
         if (c == null)
             throw new NullPointerException();
         Object[] a = c.toArray();
-        int alen = a.length;
-        if (alen != 0) {
+        if (a.length != 0) {
             int i = 0;
-            while (i < alen) {
-                // need to add class check here?
-                // in case of having <Integer> list and other type collection
+            while (i < a.length) {
                 add((T) a[i]);
                 i++;
             }
@@ -224,18 +221,11 @@ public class MyLinkedList<T> implements Iterable{
 
     public void removeCollection(Collection<?> c)
     throws MyListIsEmptyException, MyListElementNotFoundException, NullPointerException {
-        if (c == null)
-            throw new NullPointerException();
+        if (c == null) throw new NullPointerException();
         Object[] a = c.toArray();
-        int alen = a.length;
-        if (alen != 0) {
-            int i = 0;
-            while (i < alen) {
-                // need to add class check here?
-                // in case of having <Integer> list and other type collection
-                if (this.contains(a[i]))
-                    remove(a[i]);
-                i++;
+        if (a.length != 0) {
+            for (int i = 0; i < a.length; i++) {
+                if (this.contains(a[i])) remove(a[i]);
             }
         }
     }
@@ -285,7 +275,7 @@ public class MyLinkedList<T> implements Iterable{
             current = current.getNextNode();
             try {
                 removeAt(currentIndex);
-            } catch (MyListIsEmptyException | MyListIndexException e) {
+            } catch (MyListIsEmptyException | IndexOutOfBoundsException e) {
                 throw new UnsupportedOperationException();
             }
         }
